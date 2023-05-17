@@ -1,0 +1,30 @@
+###
+POST http://localhost:8080/user/
+Content-Type: application/json
+
+{
+  "nome": "José da Silva",
+  "apelido": "Zé",
+  "avatar": "T2zDoSwgbXVuZG8h",
+  "senha": "banana",
+  "email": "zé_silva@gmail.com",
+  "telefone": "22999999999"
+}
+
+###
+GET http://localhost:8080/user/22999999999/banana
+
+<> 2023-05-17T194616.200.json
+
+###
+GET http://localhost:8080/user/1
+
+<> 2023-05-17T194637.500.json
+
+###
+DELETE http://localhost:8080/user/1
+
+
+
+
+
