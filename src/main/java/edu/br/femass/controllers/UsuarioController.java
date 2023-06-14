@@ -1,22 +1,21 @@
 package edu.br.femass.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.br.femass.controllers.dtos.UsuarioDto;
 import edu.br.femass.entities.Usuario;
 import edu.br.femass.repositories.UsuarioRepository;
-import org.apache.catalina.mapper.Mapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+@CrossOrigin(origins="*")
 @RestController
 @RequestMapping("/user")
 public class UsuarioController {
     @Autowired
     private UsuarioRepository usuarioRepository;
-
+    
     @GetMapping("/{login}/{senha}")
     public UsuarioDto getUsuarioByLoginSenha(@PathVariable("login") String login,
                                           @PathVariable("senha") String senha) throws Exception {

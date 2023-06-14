@@ -2,7 +2,6 @@ package edu.br.femass.controllers;
 
 import edu.br.femass.controllers.dtos.MensagemCriacaoDto;
 import edu.br.femass.controllers.dtos.MensagemDto;
-import edu.br.femass.controllers.dtos.UsuarioDto;
 import edu.br.femass.controllers.dtos.UsuarioSemSenhaDto;
 import edu.br.femass.entities.Message;
 import edu.br.femass.entities.Usuario;
@@ -19,6 +18,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@CrossOrigin(origins="*")
 @RestController
 @RequestMapping("/message")
 public class MensagemController {
@@ -27,7 +27,7 @@ public class MensagemController {
     private UsuarioRepository usuarioRepository;
     @Autowired
     private MessageRepository messageRepository;
-    @CrossOrigin
+
     @GetMapping("/buscarUsuarios/{login}")
     public List<UsuarioSemSenhaDto> getUsuariosCadastrados(@PathVariable("login") String login) throws Exception {
         Optional<Usuario> usuario = usuarioRepository.findByTelefone(login);
@@ -42,14 +42,12 @@ public class MensagemController {
 
         ModelMapper modelMapper = new ModelMapper();
 
-        List<UsuarioSemSenhaDto> dtos = usuarios
+        return usuarios
                 .stream()
                 .map(user -> modelMapper.map(user, UsuarioSemSenhaDto.class))
                 .collect(Collectors.toList());
-        return dtos;
     }
 
-    @CrossOrigin
     @GetMapping("/buscarUsuariosComConversa/{id}")
     public Set<UsuarioSemSenhaDto> getUsuariosComConversa(@PathVariable("id") Long id) throws Exception {
 
@@ -66,7 +64,6 @@ public class MensagemController {
         return usuarios;
     }
 
-    @CrossOrigin
     @GetMapping("/buscarMensagensComUmUsuario/{id}/{idOther}")
     public Set<MensagemDto> getMensagens(@PathVariable("id") Long idFrom, @PathVariable("idOther") Long idTo) throws Exception {
 
@@ -77,15 +74,13 @@ public class MensagemController {
 
         ModelMapper modelMapper = new ModelMapper();
 
-        Set<MensagemDto> dtos = mensagens
+        return mensagens
                 .stream()
                 .map(msg -> modelMapper.map(msg, MensagemDto.class))
                 .collect(Collectors.toSet());
-        return dtos;
 
     }
 
-    @CrossOrigin
     @PostMapping("/enviarMensagem")
     public void enviarMensagem(@RequestBody MensagemCriacaoDto mensagemCriacaoDto) throws Exception {
         Optional<Usuario> usuarioFrom = usuarioRepository.findById(mensagemCriacaoDto.getIdFrom());
